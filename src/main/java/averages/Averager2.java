@@ -2,12 +2,15 @@ package averages;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.DoubleStream;
 
 public class Averager2 {
   public static void main(String[] args) {
     long start = System.nanoTime();
-    ThreadLocalRandom.current()
-        .doubles(3_000_000_000L, -Math.PI, +Math.PI)
+//    ThreadLocalRandom.current()
+//        .doubles(3_000_000_000L, -Math.PI, +Math.PI)
+    DoubleStream.iterate(0, x -> ThreadLocalRandom.current().nextDouble(-Math.PI, +Math.PI))
+      .limit(3_000_000_000L)
         .parallel()
 //        .map(d -> Math.sin(d))
         .boxed()
